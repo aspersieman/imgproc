@@ -10,32 +10,14 @@
 	#define M_PI (3.14159265358979323846)
 #endif
 
-#include "schrift.h"
+#if !defined(__CHEERP__)
+#include "Font.h"
+#endif
 
 #define STEG_HEADER_SIZE sizeof(uint32_t) * 8
 
 enum ImageType {
   PNG, JPG, BMP, TGA
-};
-
-struct Font {
-  SFT sft = {NULL, 12, 12, 0, 0, SFT_DOWNWARD_Y|SFT_RENDER_IMAGE};
-  Font(const char* fontfile, uint16_t size) {
-    if((sft.font = sft_loadfile(fontfile)) == NULL) {
-      printf("\e[31m[ERROR] Failed to load %s\e[0m\n", fontfile);
-      return;
-    }
-    set_size(size);
-  } 
-
-  ~Font() {
-    sft_freefont(sft.font);
-  }
-
-  void set_size(uint16_t size) {
-    sft.xScale = size;
-    sft.yScale = size;
-  }
 };
 
 struct Image {
@@ -90,7 +72,10 @@ struct Image {
 	Image& convolve_cyclic(uint8_t channel, uint32_t ker_w, uint32_t ker_h, double ker[], uint32_t cr, uint32_t cc);
 
   Image& overlay(const Image& source, int x, int y);
+
+  #if !defined(__CHEERP__)
 	Image& overlay_text(const char* txt, const Font& font, int x, int y, uint8_t r = 255, uint8_t g = 255, uint8_t b = 255, uint8_t a = 255);
+  #endif
 
 	Image& crop(uint16_t cx, uint16_t cy, uint16_t cw, uint16_t ch);
 
