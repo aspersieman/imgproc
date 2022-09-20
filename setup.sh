@@ -11,5 +11,6 @@
  sudo apt install lld
  sudo apt install llc
 echo "deb http://ppa.launchpad.net/leaningtech-dev/cheerp-ppa/ubuntu xenial main" | sudo tee -a /etc/apt/sources.list.d/cheerp.list
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 84540D4B9BF457D5
 sudo apt update && sudo apt install cheerp-core
 

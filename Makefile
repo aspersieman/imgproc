@@ -57,7 +57,17 @@ wasm:
 	@mkdir -p $(BUILDDIR)
 	$(CHEERP) \
 		-target cheerp-wasm \
-		-cheerp-linear-heap-size=128 \
+		$(SRCDIR)/segmented_sieve.cpp \
 		-o $(BUILDDIR)/$(TARGET_NAME).js \
-		$(SOURCES_WASM)
+		-O3
+	@cp $(TESTDIR)/js-test.html $(BUILDDIR)
+
+PHONY: js
+js:
+	@printf "\e[33m\e[1mBuilding js...\e[0m\n";
+	@mkdir -p $(BUILDDIR)
+	$(CHEERP) \
+		-target cheerp-wasm \
+		$(SRCDIR)/wasm.cpp \
+		-o $(TARGET).js
 	@cp $(TESTDIR)/js-test.html $(BUILDDIR)
